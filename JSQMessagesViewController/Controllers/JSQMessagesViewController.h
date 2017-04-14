@@ -208,7 +208,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)finishSendingMessage;
 
 /**
- *  Completes the "sending" of a new message by resetting the `inputToolbar`, adding a new collection view cell in the collection view,
+ *  Completes the "sending" of a new message without resetting the `inputToolbar`, adding a new collection view cell in the collection view,
  *  reloading the collection view, and scrolling to the newly sent message as specified by `automaticallyScrollsToMostRecentMessage`.
  *  Scrolling to the new message can be animated as specified by the animated parameter.
  *
@@ -220,6 +220,24 @@ NS_ASSUME_NONNULL_BEGIN
  *  @see `automaticallyScrollsToMostRecentMessage`.
  */
 - (void)finishSendingMessageAnimated:(BOOL)animated;
+
+/**
+ *  Animates the sending of a new message. See `finishSendingMessageAnimated:` for more details.
+ *
+ *  @see `finishSendingMessageAnimated:`.
+ */
+- (void)finishSendingMessageWithImage;
+
+/**
+ *  Completes the "sending" of a new message without resetting the `inputToolbar`, adding a new collection view cell in the collection view,
+ *  reloading the collection view, and scrolling to the newly sent message as specified by `automaticallyScrollsToMostRecentMessage`.
+ *  Scrolling to the new message can be animated as specified by the animated parameter.
+ *
+ *  @param animated Specifies whether the sending of a message should be animated or not. Pass `YES` to animate changes, `NO` otherwise.
+ *
+ *  @see `automaticallyScrollsToMostRecentMessage`.
+ */
+- (void)finishSendingMessageWithImageAnimated:(BOOL)animated;
 
 /**
  *  Animates the receiving of a new message. See `finishReceivingMessageAnimated:` for more details.

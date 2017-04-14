@@ -332,6 +332,16 @@ static void JSQInstallWorkaroundForSheetPresentationIssue26295020(void) {
     NSAssert(NO, @"Error! required method not implemented in subclass. Need to implement %s", __PRETTY_FUNCTION__);
 }
 
+- (void)finishSendingMessageWithImage
+{
+    [self finishSendingMessageWithImageAnimated:YES];
+}
+
+- (void)finishSendingMessageWithImageAnimated:(BOOL)animated {
+
+    [self performActionsWithCollectionViewAfterSendingMessage:animated];
+}
+
 - (void)finishSendingMessage
 {
     [self finishSendingMessageAnimated:YES];
@@ -345,6 +355,11 @@ static void JSQInstallWorkaroundForSheetPresentationIssue26295020(void) {
 
     [[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification object:textView];
 
+    [self performActionsWithCollectionViewAfterSendingMessage:animated];
+}
+
+- (void)performActionsWithCollectionViewAfterSendingMessage:(BOOL)animated
+{
     [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
     [self.collectionView reloadData];
 
@@ -358,7 +373,8 @@ static void JSQInstallWorkaroundForSheetPresentationIssue26295020(void) {
     [self finishReceivingMessageAnimated:YES];
 }
 
-- (void)finishReceivingMessageAnimated:(BOOL)animated {
+- (void)finishReceivingMessageAnimated:(BOOL)animated
+{
 
     self.showTypingIndicator = NO;
 
