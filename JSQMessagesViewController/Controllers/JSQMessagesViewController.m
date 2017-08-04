@@ -358,13 +358,16 @@ static void JSQInstallWorkaroundForSheetPresentationIssue26295020(void) {
     [self finishReceivingMessageAnimated:YES];
 }
 
-- (void)finishReceivingMessageAnimated:(BOOL)animated {
-
+- (void)finishReceivingMessageAnimated:(BOOL)animated
+{
     self.showTypingIndicator = NO;
 
-    [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
+    CGFloat oldOffset = self.collectionView.contentSize.height - self.collectionView.contentOffset.y;
     [self.collectionView reloadData];
-
+    [self.collectionView setNeedsLayout];
+    [self.collectionView layoutIfNeeded];
+    [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
+    [self.collectionView setContentOffset:CGPointMake(0, self.collectionView.contentSize.height - oldOffset)];
     if (self.automaticallyScrollsToMostRecentMessage && ![self jsq_isMenuVisible]) {
         [self scrollToBottomAnimated:animated];
     }
